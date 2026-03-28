@@ -1,0 +1,89 @@
+.TH G510-DAEMON 1 "2026-03-28" "g510 0.1.0" "User Commands"
+.SH NAME
+g510-daemon \- Logitech G510/G510s keyboard daemon
+.SH SYNOPSIS
+.B g510-daemon
+[\fB\-c\fR \fIconfig\fR]
+[\fB\-v\fR]
+[\fB\-\-no\-dbus\fR]
+[\fB\-\-no\-lcd\fR]
+[\fB\-\-version\fR]
+.SH DESCRIPTION
+.B g510-daemon
+is a userspace daemon that provides full support for the Logitech G510
+and G510s gaming keyboards on Linux.
+.PP
+It reads G-key events from
+.I /dev/input
+via evdev, executes macro actions, controls the RGB backlight,
+and renders content on the 160\(mu43-pixel LCD GamePanel.
+.PP
+The daemon auto-detects the keyboard model (G510 vs G510s) using
+.BR lsusb (8)
+or sysfs. G510s-specific features (headphone/mic mute LEDs, game-mode key)
+are enabled automatically.
+.SH OPTIONS
+.TP
+.BR \-c ", " \-\-config " " \fIfile\fR
+Path to the TOML configuration file.
+Default:
+.I ~/.config/g510/config.toml
+.TP
+.BR \-v ", " \-\-verbose
+Enable verbose (DEBUG) logging.
+.TP
+.B \-\-no\-dbus
+Disable the D-Bus interface (useful for testing without a session bus).
+.TP
+.B \-\-no\-lcd
+Disable the LCD GamePanel manager.
+.TP
+.B \-\-version
+Print version and exit.
+.SH FILES
+.TP
+.I ~/.config/g510/config.toml
+User configuration file (created with defaults on first run).
+.TP
+.I ~/.config/g510/profiles/
+Profile JSON files.
+.TP
+.I /etc/udev/rules.d/99-logitech-g510.rules
+udev rules for non-root USB access.
+.TP
+.I /usr/lib/systemd/user/g510-daemon.service
+systemd user service unit.
+.SH KERNEL REQUIREMENTS
+Requires the
+.B hid-lg-g15
+kernel module, available in mainline Linux since version 5.5.
+Check with:
+.PP
+.RS
+.B lsmod | grep hid_lg_g15
+.RE
+.SH EXAMPLES
+Start the daemon:
+.PP
+.RS
+.B g510-daemon
+.RE
+.PP
+Start with verbose logging:
+.PP
+.RS
+.B g510-daemon -v
+.RE
+.PP
+Enable as a systemd user service:
+.PP
+.RS
+.B systemctl --user enable --now g510-daemon
+.RE
+.SH SEE ALSO
+.BR g510-ctl (1),
+.BR g510-gui (1),
+.BR evtest (1),
+.BR udevadm (8)
+.SH BUGS
+Report bugs at https://github.com/fariaz/g510/issues

@@ -1,0 +1,27 @@
+#!/usr/bin/make -f
+# debian/rules — build script for g510-linux
+# Uses debhelper 13 + pybuild for the Python package.
+
+#export DH_VERBOSE = 1
+export PYBUILD_NAME = g510
+
+%:
+	dh $@ --with python3 --buildsystem=pybuild
+
+# Skip the test suite during package build (no hardware available on build hosts)
+override_dh_auto_test:
+	: # tests require hardware — skipped during package build
+
+# Install udev rules, systemd unit, scripts, and profiles
+override_dh_install:
+	dh_install
+	# Ensure scripts are executable
+	chmod +x debian/g510-daemon/usr/bin/g510-daemon 2>/dev/null || true
+	chmod +x debian/g510-daemon/usr/bin/g510-ctl   2>/dev/null || true
+
+# Generate postinst/prerm for the daemon package
+override_dh_installinit:
+	: # we use systemd user units, not system init — handled by postinst
+
+override_dh_installsystemd:
+	: # user units are installed via dh_install, not dh_installsystemd

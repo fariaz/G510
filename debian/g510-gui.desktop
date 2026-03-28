@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=G510 Control Panel
+GenericName=Keyboard Control Panel
+Comment=Configure the Logitech G510/G510s gaming keyboard
+Exec=g510-gui
+Icon=input-keyboard
+Categories=Settings;HardwareSettings;
+Keywords=logitech;g510;keyboard;macro;gaming;
+StartupNotify=true

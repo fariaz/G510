@@ -1,0 +1,12 @@
+g510 (0.1.0-1) noble; urgency=medium
+
+  * Initial Debian/Ubuntu package release.
+  * Supports Logitech G510 and G510s keyboards.
+  * Auto-detects model via lsusb (G510 vs G510s).
+  * Requires hid-lg-g15 kernel module (Linux 5.5+).
+  * Two binary packages: g510-daemon and g510-gui.
+  * Features: G1-G18 macros, MR record, RGB backlight, LCD GamePanel,
+    media keys, volume wheel, D-Bus interface, JSON profiles.
+  * G510s extras: headphone/mic mute LEDs, game-mode key.
+
+ -- g510 contributors <fariaz@users.noreply.github.com>  Fri, 28 Mar 2026 00:00:00 +0000

@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=G510 Daemon
+GenericName=Keyboard Daemon
+Comment=Logitech G510/G510s keyboard macro daemon
+Exec=g510-daemon
+Icon=input-keyboard
+Categories=
+Keywords=logitech;g510;keyboard;macro;gaming;
+StartupNotify=false
+NoDisplay=true
+X-GNOME-Autostart-enabled=true
+X-GNOME-Autostart-Delay=3

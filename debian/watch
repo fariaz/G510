@@ -1,0 +1,6 @@
+version=4
+opts="filenamemangle=s/.+\/v?(\d[\d.]+)\.tar\.gz/g510-$1.tar.gz/,\
+      uversionmangle=s/(\d)[_\.\-\+]?(RC|rc|alpha|beta|test)\.?(\d*)$/\
+$1~$2$3/" \
+  https://github.com/fariaz/g510/tags \
+  (?:.*\/v?(\d[\d.]+)\.tar\.gz)

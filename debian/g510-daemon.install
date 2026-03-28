@@ -1,0 +1,27 @@
+# Files installed into the g510-daemon binary package
+# Format: source-glob  destination-dir
+
+# Main executables (installed by pybuild entry_points, but also listed explicitly)
+daemon/g510-daemon.py                           usr/bin/g510-daemon
+daemon/g510-ctl.py                              usr/bin/g510-ctl
+
+# Python package (installed by pybuild into site-packages)
+# daemon/g510/                                 (handled by pybuild)
+
+# udev rules
+udev/99-logitech-g510.rules                     etc/udev/rules.d/
+
+# systemd user unit
+systemd/g510-daemon.service                     usr/lib/systemd/user/
+
+# Example profiles and macro scripts
+profiles/default.json                           usr/share/g510-linux/profiles/
+profiles/macros/screenshot.sh                   usr/share/g510-linux/macros/
+profiles/macros/mic-toggle.sh                   usr/share/g510-linux/macros/
+profiles/macros/sysinfo.sh                      usr/share/g510-linux/macros/
+
+# XDG autostart (for non-systemd environments)
+debian/g510-daemon-autostart.desktop            etc/xdg/autostart/
+
+# Verification script
+scripts/g510-verify.sh                          usr/share/g510-linux/

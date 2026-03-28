@@ -1,0 +1,33 @@
+{
+  "name": "default",
+  "rgb": {
+    "color": [255, 128, 0]
+  },
+  "lcd": {
+    "screen": "clock"
+  },
+  "macros": {
+    "M1": {
+      "G1":  { "type": "shell",     "command": "xterm" },
+      "G2":  { "type": "keystroke", "keys": "ctrl+c" },
+      "G3":  { "type": "keystroke", "keys": "ctrl+z" },
+      "G4":  { "type": "keystroke", "keys": "ctrl+shift+t" },
+      "G5":  { "type": "shell",     "command": "nautilus ~" },
+      "G6":  { "type": "text",      "text": "localhost" },
+      "G7":  { "type": "shell",     "command": "" },
+      "G8":  { "type": "shell",     "command": "" },
+      "G9":  { "type": "shell",     "command": "" },
+      "G10": { "type": "shell",     "command": "" },
+      "G11": { "type": "shell",     "command": "" },
+      "G12": { "type": "shell",     "command": "" },
+      "G13": { "type": "shell",     "command": "" },
+      "G14": { "type": "shell",     "command": "" },
+      "G15": { "type": "shell",     "command": "" },
+      "G16": { "type": "shell",     "command": "" },
+      "G17": { "type": "shell",     "command": "" },
+      "G18": { "type": "shell",     "command": "" }
+    },
+    "M2": {},
+    "M3": {}
+  }
+}

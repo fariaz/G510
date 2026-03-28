@@ -1,0 +1,23 @@
+#!/bin/sh
+# postrm for g510-daemon
+set -e
+
+case "$1" in
+    purge)
+        # Remove user config on purge (not on plain remove)
+        # We only remove system-wide files; user ~/.config/g510 stays
+        rm -f /etc/udev/rules.d/99-logitech-g510.rules 2>/dev/null || true
+        if command -v udevadm >/dev/null 2>&1; then
+            udevadm control --reload-rules 2>/dev/null || true
+        fi
+        ;;
+    remove|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
+        ;;
+    *)
+        echo "postrm called with unknown argument '$1'" >&2
+        exit 1
+        ;;
+esac
+
+#DEBHELPER#
+exit 0

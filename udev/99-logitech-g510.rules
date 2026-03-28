@@ -1,0 +1,34 @@
+# Logitech G510 / G510s udev rules
+# Grants the 'plugdev' and 'input' groups access without root.
+#
+# USB product IDs:
+#   c22d  G510  keyboard interface (no headset)
+#   c22e  G510  keyboard + USB audio (headset plugged in)
+#   c24d  G510s keyboard interface (no headset)
+#   c24e  G510s keyboard + USB audio (headset plugged in)
+#
+# Install:  sudo cp 99-logitech-g510.rules /etc/udev/rules.d/
+#           sudo udevadm control --reload-rules && sudo udevadm trigger
+
+# ── USB device nodes ──────────────────────────────────────────────────────────
+SUBSYSTEM=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c22d", MODE="0664", GROUP="plugdev"
+SUBSYSTEM=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c22e", MODE="0664", GROUP="plugdev"
+SUBSYSTEM=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c24d", MODE="0664", GROUP="plugdev"
+SUBSYSTEM=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c24e", MODE="0664", GROUP="plugdev"
+
+# ── hidraw devices (LCD access) ───────────────────────────────────────────────
+SUBSYSTEM=="hidraw", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c22d", MODE="0664", GROUP="plugdev"
+SUBSYSTEM=="hidraw", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c22e", MODE="0664", GROUP="plugdev"
+SUBSYSTEM=="hidraw", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c24d", MODE="0664", GROUP="plugdev"
+SUBSYSTEM=="hidraw", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c24e", MODE="0664", GROUP="plugdev"
+
+# ── Input event devices (G-key, media keys) ───────────────────────────────────
+SUBSYSTEM=="input", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c22d", MODE="0664", GROUP="input"
+SUBSYSTEM=="input", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c22e", MODE="0664", GROUP="input"
+SUBSYSTEM=="input", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c24d", MODE="0664", GROUP="input"
+SUBSYSTEM=="input", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c24e", MODE="0664", GROUP="input"
+
+# ── Built-in USB audio interface ──────────────────────────────────────────────
+# Present on G510 (c22e) and G510s (c24e) when a headset is plugged in.
+SUBSYSTEM=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c22e", MODE="0664", GROUP="audio"
+SUBSYSTEM=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c24e", MODE="0664", GROUP="audio"

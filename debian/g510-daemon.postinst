@@ -1,0 +1,60 @@
+#!/bin/sh
+# postinst for g510-daemon
+set -e
+
+case "$1" in
+    configure)
+        # Reload udev rules
+        if command -v udevadm >/dev/null 2>&1; then
+            udevadm control --reload-rules 2>/dev/null || true
+            udevadm trigger --subsystem-match=usb \
+                --attr-match=idVendor=046d 2>/dev/null || true
+        fi
+
+        # Add the installing user to plugdev and input groups.
+        # Try SUDO_USER first (sudo dpkg -i), then PKEXEC_UID, then
+        # look for the first non-root human user as last resort.
+        INSTALL_USER="${SUDO_USER:-}"
+        if [ -z "$INSTALL_USER" ] && [ -n "${PKEXEC_UID:-}" ]; then
+            INSTALL_USER=$(getent passwd "$PKEXEC_UID" | cut -d: -f1)
+        fi
+        if [ -z "$INSTALL_USER" ]; then
+            # Last resort: first UID>=1000 user who is not nobody
+            INSTALL_USER=$(getent passwd | awk -F: '$3>=1000 && $3<65534 {print $1; exit}')
+        fi
+        if [ -n "$INSTALL_USER" ] && id "$INSTALL_USER" >/dev/null 2>&1; then
+            for grp in plugdev input; do
+                if getent group "$grp" >/dev/null 2>&1; then
+                    if ! id -nG "$INSTALL_USER" | grep -qw "$grp"; then
+                        usermod -aG "$grp" "$INSTALL_USER" 2>/dev/null || true
+                        echo "  Added $INSTALL_USER to group $grp"
+                    fi
+                fi
+            done
+        fi
+
+        # Make example macro scripts executable
+        find /usr/share/g510-linux/macros -name '*.sh' -exec chmod +x {} \; 2>/dev/null || true
+
+        echo ""
+        echo "g510-daemon installed successfully."
+        echo ""
+        echo "IMPORTANT: Log out and back in (or reboot) for group changes to take effect."
+        echo "           Without this, the keyboard will not be detected."
+        echo ""
+        echo "To apply groups NOW without logging out:"
+        echo "  newgrp plugdev"
+        echo ""
+        echo "To start the daemon automatically at login:"
+        echo "  systemctl --user enable --now g510-daemon"
+        echo ""
+        echo "To start it right now (after re-login):"
+        echo "  systemctl --user start g510-daemon"
+        echo ""
+        echo "To verify your setup:"
+        echo "  g510-verify"
+        ;;
+esac
+
+#DEBHELPER#
+exit 0

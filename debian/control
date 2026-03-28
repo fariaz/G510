@@ -1,0 +1,69 @@
+Source: g510
+Section: utils
+Priority: optional
+Maintainer: Fariaz <fariaz@users.noreply.github.com>
+Build-Depends:
+ debhelper-compat (= 13),
+ dh-python,
+ python3-all (>= 3.11),
+ python3-setuptools,
+ python3-evdev,
+ python3-pil,
+ python3-usb
+Standards-Version: 4.6.2
+Homepage: https://github.com/fariaz/g510
+Rules-Requires-Root: no
+Vcs-Git: https://github.com/fariaz/g510.git
+Vcs-Browser: https://github.com/fariaz/g510
+
+Package: g510-daemon
+Architecture: all
+Depends:
+ ${python3:Depends},
+ ${misc:Depends},
+ python3-evdev,
+ python3-pil,
+ adduser
+Recommends:
+ python3-dbus,
+ python3-gi,
+ playerctl,
+ pulseaudio-utils,
+ xdotool,
+ python3-usb
+Suggests:
+ g510-gui
+Description: Logitech G510/G510s keyboard daemon for Linux
+ Userspace driver daemon for the Logitech G510 and G510s gaming keyboards.
+ .
+ Features:
+  - G1-G18 macro keys with M1/M2/M3 bank switching
+  - MR macro record mode (records key sequences on the fly)
+  - RGB backlight control (via kernel sysfs or USB HID)
+  - LCD GamePanel rendering (clock, sysinfo, now-playing, custom)
+  - Media keys, volume wheel, mute/mic-mute
+  - G510s: headphone/mic mute LEDs, game-mode key
+  - Auto model detection (G510 vs G510s)
+  - JSON profile system with D-Bus interface
+ .
+ Requires the hid-lg-g15 kernel module (mainline since Linux 5.5).
+
+Package: g510-gui
+Architecture: all
+Depends:
+ ${python3:Depends},
+ ${misc:Depends},
+ g510-daemon (= ${binary:Version}),
+ python3-gi,
+ gir1.2-gtk-3.0,
+ python3-dbus
+Description: GTK3 control panel for the Logitech G510/G510s keyboard
+ Graphical configuration tool for the G510/G510s keyboard daemon.
+ Designed for LXQt and other X11 desktop environments.
+ .
+ Features:
+  - Macro editor (per G-key, per M-bank)
+  - RGB colour picker with live preview
+  - LCD screen selector with in-app preview
+  - Profile manager (create, delete, import, export)
+  - Live bank indicator and game-mode status

@@ -1,0 +1,60 @@
+.TH G510-CTL 1 "2026-03-28" "g510 0.1.0" "User Commands"
+.SH NAME
+g510-ctl \- command-line interface to the G510 daemon
+.SH SYNOPSIS
+.B g510-ctl
+\fIcommand\fR [\fIargs\fR...]
+.SH DESCRIPTION
+.B g510-ctl
+communicates with the running
+.BR g510-daemon (1)
+via D-Bus to control the keyboard.
+.SH COMMANDS
+.TP
+.B status
+Show daemon status: keyboard model, active bank, game mode, profile, RGB, LCD screen.
+.TP
+.B color \fIr g b\fR | \fIname\fR
+Set RGB backlight color. Named colors: red, green, blue, orange, purple, cyan, yellow, white, off.
+.TP
+.B lcd \fIscreen\fR
+Set LCD screen. Screens: clock, sysinfo, nowplaying, custom.
+.TP
+.B profile list|switch|create|delete [\fIname\fR]
+Manage profiles.
+.TP
+.B macro list [\fIbank\fR|ALL]
+List all bound macros in a bank.
+.TP
+.B macro get \fIkey bank\fR
+Show the macro bound to a key/bank.
+.TP
+.B macro set \fIkey bank type value\fR
+Bind a macro. Types: shell, keystroke, text, script.
+.TP
+.B macro delete \fIkey bank\fR
+Unbind a macro.
+.TP
+.B macro clear \fIbank\fR|ALL
+Remove all macros from a bank or all banks.
+.TP
+.B completions bash|zsh
+Print shell completion script.
+.TP
+.BR \-V ", " \-\-version
+Print version and exit.
+.SH EXAMPLES
+.RS
+.B g510-ctl color orange
+.PP
+.B g510-ctl macro set G1 M1 shell "xterm -e htop"
+.PP
+.B g510-ctl macro set G2 M1 keystroke "ctrl+shift+t"
+.PP
+.B g510-ctl profile switch gaming
+.PP
+.B source <(g510-ctl completions bash)
+.RE
+.SH SEE ALSO
+.BR g510-daemon (1),
+.BR g510-gui (1)

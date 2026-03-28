@@ -1,0 +1,7 @@
+# Files installed into the g510-gui binary package
+
+# Main GUI script
+gui/g510-gui.py                                 usr/bin/g510-gui
+
+# Desktop entry
+debian/g510-gui.desktop                         usr/share/applications/

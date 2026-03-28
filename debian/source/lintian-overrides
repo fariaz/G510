@@ -1,0 +1,20 @@
+# lintian overrides for g510-linux source package
+#
+# These warnings are expected and intentional:
+
+# The package installs Python scripts to /usr/bin without the .py extension;
+# this is correct for installed executables.
+g510-daemon: python-script-but-no-python-dep [usr/bin/g510-daemon]
+g510-daemon: python-script-but-no-python-dep [usr/bin/g510-ctl]
+g510-gui: python-script-but-no-python-dep [usr/bin/g510-gui]
+
+# The udev rules file is a conffile but lintian may flag its path.
+g510-daemon: file-in-etc-not-marked-as-conffile
+
+# systemd user units live in /usr/lib/systemd/user/, not /lib/systemd/user/.
+# This is correct for Ubuntu 22.04+ (merged /usr layout).
+g510-daemon: systemd-user-service-without-requires
+
+# The homepage URL is a placeholder until a real repo is established.
+g510-daemon: debian-control-has-unusual-field-spacing
+g510-gui: debian-control-has-unusual-field-spacing

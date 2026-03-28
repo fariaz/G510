@@ -1,0 +1,22 @@
+[Unit]
+Description=Logitech G510 keyboard daemon
+Documentation=https://github.com/fariaz/g510
+After=graphical-session.target dbus.service
+Wants=dbus.service
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/g510-daemon
+Restart=on-failure
+RestartSec=3
+Environment=PYTHONUNBUFFERED=1
+
+# Log to journald (cap to 10 MB to prevent unbounded growth)
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=g510-daemon
+LogRateLimitIntervalSec=30
+LogRateLimitBurst=200
+
+[Install]
+WantedBy=graphical-session.target

@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "g510"
+version = "0.1.0"
+description = "Full Linux driver stack for the Logitech G510 / G510s keyboard"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.11"
+dependencies = [
+    "evdev>=1.6",
+    "Pillow>=9.0",
+    "pyusb>=1.2",
+]
+
+[project.optional-dependencies]
+dbus = ["dbus-python"]
+dev  = ["pytest>=7", "pytest-mock"]
+
+[project.scripts]
+g510-daemon = "g510.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["daemon"]
+
+[tool.setuptools.package-dir]
+"" = "daemon"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts   = "-v --tb=short"
+
+[tool.black]
+line-length = 100
+target-version = ["py311"]
+
+[tool.flake8]
+max-line-length = 100
+extend-ignore = ["E501", "W503", "E203"]
+exclude = ["__pycache__", ".git"]
